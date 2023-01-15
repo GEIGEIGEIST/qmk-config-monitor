@@ -2,14 +2,6 @@
 
 #include_next <mcuconf.h>
 
-
-
-#undef RP_PWM_USE_PWM4
-#define RP_PWM_USE_PWM4 TRUE
-
-#undef RP_PWM_USE_TIM1
-#define RP_PWM_USE_TIM1 TRUE
-
 #undef RP_SIO_USE_UART0
 #define RP_SIO_USE_UART0 FALSE
 #undef RP_SIO_USE_UART1
@@ -20,3 +12,10 @@
 #define RP_SPI_USE_SPI0 TRUE
 #undef RP_USB_USE_ERROR_DATA_SEQ_INTR
 #define RP_USB_USE_ERROR_DATA_SEQ_INTR FALSE
+
+
+//#undef RP_PWM_USE_PWM4
+//#define RP_PWM_USE_PWM4 TRUE
+
+//#undef RP_PWM_USE_TIM1
+//#define RP_PWM_USE_TIM1 TRUE
