@@ -51,6 +51,7 @@ Copyright 2023 GEIST <@geigeigeist>
 
 #define RGB_DI_PIN A1
 
+/*
 #define AUDIO_PIN GP9
 #define AUDIO_VOICES
 #ifdef AUDIO_ENABLE  
@@ -58,7 +59,8 @@ Copyright 2023 GEIST <@geigeigeist>
 #define MONITOR_SOUND B__NOTE(_REST), B__NOTE(_REST), H__NOTE(_C2), W__NOTE(_F3), H__NOTE(_REST),  Q__NOTE(_E2), W__NOTE(_B3), H__NOTE(_REST), S__NOTE(_D0), E__NOTE(_REST), W__NOTE(_F3), Q__NOTE(_D2)
 #define STARTUP_SONG SONG(MONITOR_SOUND)
 #endif 
-
+*/
+    
 #define SPI_DRIVER SPID0
 #define SPI_MISO_PIN GP20
 #define SPI_SCK_PIN GP22
