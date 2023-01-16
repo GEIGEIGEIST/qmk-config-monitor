@@ -1,5 +1,4 @@
-/*
-Copyright 2023 GEIST <@geigeigeist>
+/* Copyright 2019
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,14 +29,6 @@ Copyright 2023 GEIST <@geigeigeist>
 /* define if matrix has ghost (lacks anti-ghosting diodes) */
 //#define MATRIX_HAS_GHOST
 
-/* Mechanical locking support. Use KC_LCAP, KC_LNUM or KC_LSCR instead in keymap */
-#define LOCKING_SUPPORT_ENABLE
-/* Locking resynchronize hack */
-#define LOCKING_RESYNC_ENABLE
-
-#define TAPPING_TERM 500
-
-
 // #define PRODUCT "Onekey Raspberry Pi Pico RP2040"
 #define MATRIX_COL_PINS \
     { GP4 }
@@ -46,23 +37,11 @@ Copyright 2023 GEIST <@geigeigeist>
 // #define DEBUG_MATRIX_SCAN_RATE
 
 #define RP2040_BOOTLOADER_DOUBLE_TAP_RESET
-//#define RP2040_BOOTLOADER_DOUBLE_TAP_RESET_LED GP25
 #define RP2040_BOOTLOADER_DOUBLE_TAP_RESET_TIMEOUT 500U
 
-//#define RGB_DI_PIN A1 
+#define RGB_DI_PIN A1
 
-/*
-#define AUDIO_PIN GP9
-#define AUDIO_VOICES
-#ifdef AUDIO_ENABLE  
-#define AUDIO_DAC_SAMPLE_MAX 4095U   
-#define MONITOR_SOUND B__NOTE(_REST), B__NOTE(_REST), H__NOTE(_C2), W__NOTE(_F3), H__NOTE(_REST),  Q__NOTE(_E2), W__NOTE(_B3), H__NOTE(_REST), S__NOTE(_D0), E__NOTE(_REST), W__NOTE(_F3), Q__NOTE(_D2)
-#define STARTUP_SONG SONG(MONITOR_SOUND)
-#endif 
-*/
-    
 #define SPI_DRIVER SPID0
-#define SPI_MISO_PIN GP20
 #define SPI_SCK_PIN GP22
 #define SPI_MOSI_PIN GP23
 

@@ -1,0 +1,12 @@
+{
+  "name": "RP2040 VIA",
+  "vendorId": "0xfeed",
+  "productId": "0x6465",
+  "lighting": "none",
+  "matrix": { "rows": 1, "cols": 1 },
+  "layouts": {
+    "keymap": [
+      ["0,0"]
+    ]
+  }
+}

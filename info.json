@@ -1,10 +1,10 @@
 {
-    "keyboard_name": "MONITOR", 
-    "url": "https://github.com/GEIGEIGEIST/MONITOR", 
-    "manufacturer": "GEIST",
+    "manufacturer": "QMK",
+    "url": "",
+    "maintainer": "qmk",
     "usb": {
-        "vid": "0x3A3C",
-        "pid": "0x0003",
+        "vid": "0xFEED",
+        "pid": "0x6465",
         "device_version": "0.0.1"
     },
     "layouts": {
@@ -15,6 +15,3 @@
         }
     }
 }
-
-
-
