@@ -1,90 +1,83 @@
-/* Copyright 2021 Stefan Kerkmann
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
 #include QMK_KEYBOARD_H
 
 #ifdef QUANTUM_PAINTER_ENABLE
-#include "animation.qgf.h"
-#include "instaclip_16colors.qgf.h"
-#include "iosevka11.qff.h"
-#include "karlk90.qgf.h"
+//#include "gangbang.c"
+//#include "boy.c"
+//#include "geist_tc.c"
+//#include "geist_raw.c"
+#include "lila.c"
 #include "qp.h"
+#include "qp_lvgl.h"
 
-#define LCD_CS_PIN GP21
+#define LCD_CS_PIN GP29
 #define LCD_DC_PIN GP27
-#define LCD_RST_PIN GP26
+#define LCD_RST_PIN GP28
 
-static painter_device_t display;
-static painter_image_handle_t image;
-static painter_font_handle_t font;
-static painter_image_handle_t animation;
-static deferred_token animation_token;
+static painter_device_t qp_display;
 #endif
+
+
+//LV_IMG_DECLARE(gangbang);
+//LV_IMG_DECLARE(boy);
+//LV_IMG_DECLARE(geist_tc);
+//LV_IMG_DECLARE(geist_raw);
+//LV_IMG_DECLARE(matrix_80);
+//LV_IMG_DECLARE(mund_small);
+LV_IMG_DECLARE(lila);
+
+lv_obj_t * ui_Screen1;
+lv_obj_t * ui_Screen1_Label_RGB;
+lv_obj_t * ui_Layer_Indicator;
+//lv_obj_t * lottie;
+
+
 
 void keyboard_post_init_user(void) {
-  debug_enable = true;
-#ifdef QUANTUM_PAINTER_ENABLE
-  display = qp_st7789_make_spi_device(240, 320, LCD_CS_PIN, LCD_DC_PIN,
+
+  qp_display = qp_st7789_make_spi_device(240, 320, LCD_CS_PIN, LCD_DC_PIN,
                                       LCD_RST_PIN, 1, 3);
-  // display = qp_ili9341_make_spi_device(240, 320, LCD_CS_PIN, LCD_DC_PIN,
-  // LCD_RST_PIN, 2, 0);
-  qp_init(display, QP_ROTATION_0); // Initialise the display
-  qp_power(display, true);
-  qp_rect(display, 0, 0, 239, 319, 0, 0, 0, true);
-#if 1
+  //qp_set_viewport_offsets(display, 0, 34);
+  qp_init(qp_display, QP_ROTATION_0); // Initialise the display
+  qp_power(qp_display, true);
+  qp_rect(qp_display, 0, 0, 239, 319, 0, 0, 0, true);
+  qp_lvgl_attach(qp_display);
 
-#if 1
-  animation = qp_load_image_mem(gfx_instaclip_16colors);
-#else
-  animation = qp_load_image_mem(gfx_animation);
-#endif
+  if (qp_lvgl_attach(qp_display)) {     // Attach LVGL to the display
+    wait_ms(50);
+    lv_disp_t * dispp = lv_disp_get_default();
+    lv_theme_t * theme = lv_theme_default_init(dispp, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED), true, LV_FONT_DEFAULT);
+    lv_disp_set_theme(dispp, theme);
+    ui_Screen1 = lv_obj_create(NULL);
 
-  if (animation != NULL) {
-    animation_token = qp_animate(display, (240 - animation->width),
-                                 (240 - animation->height), animation);
+
+    ui_Layer_Indicator = lv_gif_create(ui_Screen1);
+    lv_gif_set_src(ui_Layer_Indicator, &lila); 
+    lv_obj_align(ui_Layer_Indicator, LV_ALIGN_CENTER, 0, 0);
+
+/*
+    lottie = lv_rlottie_create_from_file(ui_Screen1, 200, 300,
+            "bounce.json");
+    lv_obj_center(lottie);
+*/
+  /*
+    ui_Layer_Indicator = lv_img_create(ui_Screen1);
+    lv_img_set_src(ui_Layer_Indicator, &geist_raw); 
+    lv_obj_set_width(ui_Layer_Indicator, LV_SIZE_CONTENT);   /// 81
+    lv_obj_set_height(ui_Layer_Indicator, LV_SIZE_CONTENT);    /// 55
+    lv_obj_set_x(ui_Layer_Indicator, 0);
+    lv_obj_set_y(ui_Layer_Indicator, 0);
+    lv_obj_set_align(ui_Layer_Indicator, LV_ALIGN_CENTER);
+*/
+   ui_Screen1_Label_RGB = lv_label_create(ui_Screen1);
+    lv_obj_set_width(ui_Screen1_Label_RGB, 150);
+    lv_obj_set_style_text_font(ui_Screen1_Label_RGB, &lv_font_montserrat_14, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_align(ui_Screen1_Label_RGB, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_Screen1_Label_RGB, "LVGL IS NO FUN!");
+
+
+    lv_disp_load_scr(ui_Screen1);
   }
-#endif
-
-#if 0
-    image = qp_load_image_mem(gfx_karlk90);
-    if (image != NULL) {
-        qp_drawimage(display, 0, 0, image);
-        qp_flush(display);
-    }
-  font = qp_load_font_mem(font_iosevka11);
-  if (font != NULL) {
-    qp_drawtext(display, 40, 160, font, "QUANTUM PAINTER @ RP2040");
-  }
-#endif
-
-#endif
 }
 
-void housekeeping_task_user(void) {
-#if 0
-  static uint32_t last_draw = 0;
-  if (timer_elapsed32(last_draw) > 33) { // Throttle to 30fps
-    last_draw = timer_read32();
-    // Draw 8px-wide rainbow down the left side of the display
-    for (int i = 240; i < 320; ++i) {
-      qp_line(display, 0, i, 239, i, i, 255, 255);
-    }
-    qp_flush(display);
-  }
-#endif
-}
 
 void board_init(void) {}
