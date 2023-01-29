@@ -19,7 +19,11 @@ OPT_DEFS = -O2
 #SRC += monitormund.qgf.c
 #SRC += geist_raw.c
 #SRC += matrix_80.c
-SRC += mund_small.c
+#SRC += mund_small.c
+#SRC += mund_small_still.c
+#SRC += mund_small_alpha.c
+
+BACKLIGHT_ENABLE = yes       # Enable keyboard backlight functionality
 
 
 QUANTUM_PAINTER_ENABLE             = yes
@@ -33,5 +37,5 @@ LAYOUTS = ortho_1x1
 
 
 # AUDIO 
-AUDIO_ENABLE = no
+AUDIO_ENABLE = yes
 AUDIO_DRIVER = pwm_hardware
